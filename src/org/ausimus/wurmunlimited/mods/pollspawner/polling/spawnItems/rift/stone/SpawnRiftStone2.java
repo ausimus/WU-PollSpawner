@@ -57,7 +57,7 @@ public class SpawnRiftStone2 {
             if (vill != null) {
                 return;
             }
-            if (Constants.useWorldSizeMath && getNumberOfItems(ItemList.riftCrystal4) < Zones.worldTileSizeX / Constants.worldSizeMathDivider) {
+            if (Constants.useWorldSizeMath && getNumberOfItems(ItemList.riftStone2) < Zones.worldTileSizeX / Constants.worldSizeMathDivider) {
                 SpawnItem(ItemList.riftStone2, randomQL, randomROT, randomRarity);
                 AusLogger.WriteLog("S2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], Constants.logDir);
                 if (Constants.debugMode) {

@@ -57,15 +57,15 @@ public class SpawnRiftCrystal1 {
             if (vill != null) {
                 return;
             }
-            if (Constants.useWorldSizeMath && getNumberOfItems(ItemList.riftCrystal4) < Zones.worldTileSizeX / Constants.worldSizeMathDivider) {
+            if (Constants.useWorldSizeMath && getNumberOfItems(ItemList.riftCrystal1) < Zones.worldTileSizeX / Constants.worldSizeMathDivider) {
                 SpawnItem(ItemList.riftCrystal1, randomQL, randomROT, randomRarity);
                 AusLogger.WriteLog("C1 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], Constants.logDir);
                 if (Constants.debugMode) {
                     Server.getInstance().broadCastAlert("C1 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
                 }
             } else {
-                if (getNumberOfItems(ItemList.riftCrystal4) < Constants.MaxCount) {
-                    SpawnItem(ItemList.riftCrystal4, randomQL, randomROT, randomRarity);
+                if (getNumberOfItems(ItemList.riftCrystal1) < Constants.MaxCount) {
+                    SpawnItem(ItemList.riftCrystal1, randomQL, randomROT, randomRarity);
                     AusLogger.WriteLog("C1 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], Constants.logDir);
                     if (Constants.debugMode) {
                         Server.getInstance().broadCastAlert("C1 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);

@@ -11,40 +11,40 @@
     /:/  /      \::/  /      \::/  /     \/__/        /:/  /      \::/  /      \::/  /
     \/__/        \/__/        \/__/                   \/__/        \/__/        \/__/
 */
-package org.ausimus.wurmunlimited.mods.pollspawner.polling.spawnItems.rift.crystal;
+package org.ausimus.wurmunlimited.mods.pollspawner.polling.spawncreatures;
 
 import com.wurmonline.mesh.Tiles;
 import com.wurmonline.server.*;
-import com.wurmonline.server.items.Item;
-import com.wurmonline.server.items.ItemFactory;
-import com.wurmonline.server.items.ItemList;
+import com.wurmonline.server.creatures.Creature;
+import com.wurmonline.server.creatures.CreatureTemplateIds;
+import com.wurmonline.server.creatures.CreatureTypes;
 import com.wurmonline.server.utils.DbUtilities;
 import com.wurmonline.server.villages.Village;
 import com.wurmonline.server.zones.VolaTile;
 import com.wurmonline.server.zones.Zones;
 import org.ausimus.wurmunlimited.mods.pollspawner.AusLogger;
-import org.ausimus.wurmunlimited.mods.pollspawner.configuration.Constants;
-
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Random;
 
-public class SpawnRiftCrystal2 {
+import static org.ausimus.wurmunlimited.mods.pollspawner.configuration.Constants.*;
+
+/*Super duper copyPasta*/
+@SuppressWarnings/*Who are you to tell me how to spell penus.*/("SpellCheckingInspection")
+public class SpawnRiftCreature6 {
     private Random random = new Random();
     private int rtx = random.nextInt(Server.surfaceMesh.getSize());
     private int rty = random.nextInt(Server.surfaceMesh.getSize());
 
-    public SpawnRiftCrystal2() {
-        float randomQL = (float) 0 + random.nextInt(100);
+    public SpawnRiftCreature6() {
+        int max = 1;
+        int min = 0;
+        byte rSex = (byte) (random.nextInt(max - min + 1) + min);
+
         float randomROT = (float) 0 + random.nextInt(360);
-        byte randomRarity;
-        if (Constants.useRandomRarity) {
-            randomRarity = (byte) random.nextInt(4);
-        } else {
-            randomRarity = Constants.itemRarityLevel;
-        }
+        byte randomType = (byte) random.nextInt(CreatureTypes.C_MOD_DISEASED);
         int tile = Server.surfaceMesh.getTile(rtx, rty);
         short height = Tiles.decodeHeight(tile);
         if (height > 10 && preferedTypes(tile)) {
@@ -57,24 +57,28 @@ public class SpawnRiftCrystal2 {
             if (vill != null) {
                 return;
             }
-            if (Constants.useWorldSizeMath && getNumberOfItems(ItemList.riftCrystal2) < Zones.worldTileSizeX / Constants.worldSizeMathDivider) {
-                SpawnItem(ItemList.riftCrystal2, randomQL, randomROT, randomRarity);
-                AusLogger.WriteLog("C2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], Constants.logDir);
-                if (Constants.debugMode) {
-                    Server.getInstance().broadCastAlert("Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
+            if (useWorldSizeMath && getNumberofCreatures() < Zones.worldTileSizeX / worldSizeMathDivider) {
+                SpawnCreature(CreatureTemplateIds.RIFT_OGRE_MAGE_CID, randomType, randomROT, rSex, RJ6Name);
+                AusLogger.WriteLog("Cret6 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], logDir);
+                if (debugMode) {
+                    Server.getInstance().broadCastAlert("Cret6 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
                 }
             } else {
-                if (getNumberOfItems(ItemList.riftCrystal2) < Constants.MaxCount) {
-                    SpawnItem(ItemList.riftCrystal2, randomQL, randomROT, randomRarity);
-                    AusLogger.WriteLog("C2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], Constants.logDir);
-                    if (Constants.debugMode) {
-                        Server.getInstance().broadCastAlert("Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
+                if (getNumberofCreatures() < MaxCount) {
+                    SpawnCreature(CreatureTemplateIds.RIFT_OGRE_MAGE_CID, randomType, randomROT, rSex, RJ6Name);
+                    AusLogger.WriteLog("Cret6 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], logDir);
+                    if (debugMode) {
+                        Server.getInstance().broadCastAlert("Cret6 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
                     }
                 }
             }
         }
     }
 
+    /**
+     * @param tile The tile to call.
+     * @return the return statement for prefered spawn tile type.
+     */
     private boolean preferedTypes(int tile) {
         return !Tiles.isRoadType(Tiles.decodeType(tile)) ||
                 Tiles.decodeType(tile) != Tiles.Tile.TILE_ROCK.id ||
@@ -82,10 +86,14 @@ public class SpawnRiftCrystal2 {
                 Tiles.decodeType(tile) != Tiles.Tile.TILE_LAVA.id;
     }
 
+    /**
+     * @param tx TileX
+     * @param ty TileY
+     * @return new short[]{(short) x, (short) (highest - lowest)};
+     */
     private static short[] getTileSteepness(int tx, int ty) {
         short highest = -100;
         short lowest = 32000;
-
         int x;
         for (x = 0; x <= 1; ++x) {
             for (int y = 0; y <= 1; ++y) {
@@ -102,37 +110,46 @@ public class SpawnRiftCrystal2 {
                 }
             }
         }
-
         x = (highest + lowest) / 2;
         return new short[]{(short) x, (short) (highest - lowest)};
     }
 
-    // Yea i know i could have used a for loop to count the items, this is less laggy.
-    private int getNumberOfItems(int item) {
+    /**
+     * Yea i know i could have used a for loop to count the items, this is less laggy.
+     *
+     * @return getNumCreatures
+     */
+    private int getNumberofCreatures() {
         Statement stmt = null;
         ResultSet rs = null;
-        int getNumItems = 0;
+        int getNumCreatures = 0;
         try {
-            Connection dbcon = DbConnector.getItemDbCon();
+            Connection dbcon = DbConnector.getCreatureDbCon();
             stmt = dbcon.createStatement();
-            rs = stmt.executeQuery("SELECT COUNT(*) FROM ITEMS WHERE (TEMPLATEID) = " + item);
+            rs = stmt.executeQuery("SELECT COUNT(*) FROM CREATURES WHERE NAME = \"Rift Ogre Mage\"");
             if (rs.next()) {
-                getNumItems = rs.getInt(1);
+                getNumCreatures = rs.getInt(1);
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
         } finally {
             DbUtilities.closeDatabaseObjects(stmt, rs);
         }
-        return getNumItems;
+        return getNumCreatures;
     }
 
-    private void SpawnItem(int item, float ql, float rot, byte rarity) {
+    /**
+     * @param cret The creature to create.
+     * @param type Creature type.
+     * @param rot  Rotation.
+     * @param sex  Gender.
+     * @param name Name.
+     */
+    private void SpawnCreature(int cret, byte type, float rot, byte sex, String name) {
         try {
-            Item i = ItemFactory.createItem(item, ql, (float) (rtx << 2) + 2.0F, (float) (rty << 2) + 2.0F, rot, true, rarity, -10L, null);
-            i.setName("Rift Crystal");
+            Creature.doNew(cret, type, (float) (rtx << 2) + 2.0F, (float) (rty << 2) + 2.0F, rot, 0, name, sex);
         } catch (Exception ex) {
-            ex.getMessage();
+            ex.printStackTrace();
         }
     }
 }
