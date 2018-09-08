@@ -19,20 +19,25 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class AusLogger {
+public class AusLogger
+{
 
     /**
      * @param data Whats logged
      */
-    public static void WriteLog(String data, String dir) {
-        try {
+    public static void WriteLog(String data, String dir)
+    {
+        try
+        {
             FileWriter writeLog = new FileWriter(dir, true);
             BufferedWriter bufferedLogWriter = new BufferedWriter(writeLog);
             DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss ");
             Date timeStamp = new Date();
             bufferedLogWriter.write(dateFormat.format(timeStamp) + data + "\n");
             bufferedLogWriter.close();
-        } catch (IOException ex) {
+        }
+        catch (IOException ex)
+        {
             ex.printStackTrace();
         }
     }

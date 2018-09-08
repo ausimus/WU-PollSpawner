@@ -26,24 +26,28 @@ import com.wurmonline.server.creatures.Creature;
 import java.util.Collections;
 import java.util.List;
 
-public class PurgeItems implements WurmServerMod, ItemTypes, MiscConstants, ModAction, BehaviourProvider, ActionPerformer {
+public class PurgeItems implements WurmServerMod, ItemTypes, MiscConstants, ModAction, BehaviourProvider, ActionPerformer
+{
 
     private static short actionID;
     private static ActionEntry actionEntry;
 
-    public PurgeItems() {
+    public PurgeItems()
+    {
         actionID = (short) ModActions.getNextActionId();
         actionEntry = ActionEntry.createEntry(actionID, "Purge PollSpawned Items", "Purging", new int[]{});
         ModActions.registerAction(actionEntry);
     }
 
     @Override
-    public BehaviourProvider getBehaviourProvider() {
+    public BehaviourProvider getBehaviourProvider()
+    {
         return this;
     }
 
     @Override
-    public ActionPerformer getActionPerformer() {
+    public ActionPerformer getActionPerformer()
+    {
         return this;
     }
 
@@ -51,7 +55,8 @@ public class PurgeItems implements WurmServerMod, ItemTypes, MiscConstants, ModA
      * @return {@link PurgeItems#actionID}
      */
     @Override
-    public short getActionId() {
+    public short getActionId()
+    {
         return actionID;
     }
 
@@ -62,10 +67,14 @@ public class PurgeItems implements WurmServerMod, ItemTypes, MiscConstants, ModA
      * @return {@link Collections#singletonList(java.lang.Object) java.lang.Object = actionEntry} / null;
      */
     @Override
-    public List<ActionEntry> getBehavioursFor(Creature performer, Item source, Item target) {
-        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity) {
+    public List<ActionEntry> getBehavioursFor(Creature performer, Item source, Item target)
+    {
+        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity)
+        {
             return Collections.singletonList(actionEntry);
-        } else {
+        }
+        else
+        {
             return null;
         }
     }
@@ -80,22 +89,29 @@ public class PurgeItems implements WurmServerMod, ItemTypes, MiscConstants, ModA
      * @return boolean.
      */
     @Override
-    public boolean action(Action act, Creature performer, Item source, Item target, short action, float counter) {
-        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity && performer.getPower() == MiscConstants.POWER_IMPLEMENTOR) {
+    public boolean action(Action act, Creature performer, Item source, Item target, short action, float counter)
+    {
+        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity && performer.getPower() == MiscConstants.POWER_IMPLEMENTOR)
+        {
             Item[] items = Items.getAllItems();
-            for (Item toPurge : items) {
-                if (purgeArray(toPurge)) {
+            for (Item toPurge : items)
+            {
+                if (purgeArray(toPurge))
+                {
                     Items.destroyItem(toPurge.getWurmId());
                     performer.getCommunicator().sendNormalServerMessage("Items Purged.", (byte) 3);
                 }
             }
-        } else {
+        }
+        else
+        {
             performer.getCommunicator().sendNormalServerMessage("Unauthorized.", (byte) 3);
         }
         return true;
     }
 
-    private boolean purgeArray(Item item) {
+    private boolean purgeArray(Item item)
+    {
         return item.getTemplateId() == ItemList.riftCrystal1 ||
                 item.getTemplateId() == ItemList.riftCrystal2 ||
                 item.getTemplateId() == ItemList.riftCrystal3 ||

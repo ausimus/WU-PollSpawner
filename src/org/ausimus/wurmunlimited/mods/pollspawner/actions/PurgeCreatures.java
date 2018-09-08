@@ -27,24 +27,28 @@ import com.wurmonline.server.behaviours.ActionEntry;
 import java.util.Collections;
 import java.util.List;
 
-public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, ModAction, BehaviourProvider, ActionPerformer {
+public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, ModAction, BehaviourProvider, ActionPerformer
+{
 
     private static short actionID;
     private static ActionEntry actionEntry;
 
-    public PurgeCreatures() {
+    public PurgeCreatures()
+    {
         actionID = (short) ModActions.getNextActionId();
         actionEntry = ActionEntry.createEntry(actionID, "Purge PollSpawned Creatures", "Purging", new int[]{});
         ModActions.registerAction(actionEntry);
     }
 
     @Override
-    public BehaviourProvider getBehaviourProvider() {
+    public BehaviourProvider getBehaviourProvider()
+    {
         return this;
     }
 
     @Override
-    public ActionPerformer getActionPerformer() {
+    public ActionPerformer getActionPerformer()
+    {
         return this;
     }
 
@@ -52,7 +56,8 @@ public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, 
      * @return {@link PurgeItems#actionID}
      */
     @Override
-    public short getActionId() {
+    public short getActionId()
+    {
         return actionID;
     }
 
@@ -63,10 +68,14 @@ public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, 
      * @return {@link Collections#singletonList(java.lang.Object) java.lang.Object = actionEntry} / null;
      */
     @Override
-    public List<ActionEntry> getBehavioursFor(Creature performer, Item source, Item target) {
-        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity) {
+    public List<ActionEntry> getBehavioursFor(Creature performer, Item source, Item target)
+    {
+        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity)
+        {
             return Collections.singletonList(actionEntry);
-        } else {
+        }
+        else
+        {
             return null;
         }
     }
@@ -81,16 +90,22 @@ public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, 
      * @return boolean.
      */
     @Override
-    public boolean action(Action act, Creature performer, Item source, Item target, short action, float counter) {
-        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity && performer.getPower() == MiscConstants.POWER_IMPLEMENTOR) {
+    public boolean action(Action act, Creature performer, Item source, Item target, short action, float counter)
+    {
+        if (source.getTemplateId() == ItemList.wandDeity && target.getTemplateId() == ItemList.wandDeity && performer.getPower() == MiscConstants.POWER_IMPLEMENTOR)
+        {
             Creature[] crets = Creatures.getInstance().getCreatures();
-            for (Creature toPurge : crets) {
-                if (purgeArray(toPurge)) {
+            for (Creature toPurge : crets)
+            {
+                if (purgeArray(toPurge))
+                {
                     toPurge.destroy();
                     performer.getCommunicator().sendNormalServerMessage("Creatures Purged.", (byte) 3);
                 }
             }
-        } else {
+        }
+        else
+        {
             performer.getCommunicator().sendNormalServerMessage("Unauthorized.", (byte) 3);
         }
         return true;
@@ -100,7 +115,8 @@ public class PurgeCreatures implements WurmServerMod, ItemTypes, MiscConstants, 
      * @param cret The creature in question represented by {@link CreatureTemplateIds}
      * @return Return above value.
      */
-    private boolean purgeArray(Creature cret) {
+    private boolean purgeArray(Creature cret)
+    {
         return cret.getTemplate().getTemplateId() == CreatureTemplateIds.RIFT_JACKAL_ONE_CID ||
                 cret.getTemplate().getTemplateId() == CreatureTemplateIds.RIFT_JACKAL_TWO_CID ||
                 cret.getTemplate().getTemplateId() == CreatureTemplateIds.RIFT_JACKAL_THREE_CID ||

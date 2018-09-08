@@ -35,7 +35,8 @@ import org.gotti.wurmunlimited.modsupport.actions.ModActions;
 
 import java.util.Properties;
 
-public class Initiator implements WurmServerMod, Configurable, ServerPollListener, PreInitable, ServerStartedListener {
+public class Initiator implements WurmServerMod, Configurable, ServerPollListener, PreInitable, ServerStartedListener
+{
     // Items
     private long getLastPollItem1 = 0;
     private long getLastPollItem2 = 0;
@@ -62,7 +63,8 @@ public class Initiator implements WurmServerMod, Configurable, ServerPollListene
     // End Creatures
 
     @Override
-    public void configure(Properties properties) {
+    public void configure(Properties properties)
+    {
         Constants.debugMode = Boolean.parseBoolean(properties.getProperty("debugMode", Boolean.toString(Constants.debugMode)));
         Constants.pollTime = Integer.parseInt(properties.getProperty("pollTime", Integer.toString(Constants.pollTime)));
         Constants.useWorldSizeMath = Boolean.parseBoolean(properties.getProperty("useWorldSizeMath", Boolean.toString(Constants.useWorldSizeMath)));
@@ -75,12 +77,16 @@ public class Initiator implements WurmServerMod, Configurable, ServerPollListene
     }
 
     @Override
-    public void onServerPoll() {
+    public void onServerPoll()
+    {
         // These are also used for creature spawning.
         long ItemPollTime1;
-        if (Constants.debugMode) {
+        if (Constants.debugMode)
+        {
             ItemPollTime1 = 1;
-        } else {
+        }
+        else
+        {
             ItemPollTime1 = TimeConstants.SECOND_MILLIS * Constants.pollTime;
         }
         long ItemPollTime2 = ItemPollTime1 + Constants.pollTime;
@@ -98,32 +104,40 @@ public class Initiator implements WurmServerMod, Configurable, ServerPollListene
         long ItemPollTime12 = ItemPollTime11 + Constants.pollTime;
 
         // Creatures
-        if (Constants.spawnRiftCreatures) {
-            if (System.currentTimeMillis() - ItemPollTime1 > getLastPollCret1) {
+        if (Constants.spawnRiftCreatures)
+        {
+            if (System.currentTimeMillis() - ItemPollTime1 > getLastPollCret1)
+            {
                 new SpawnRiftCreature1();
                 getLastPollCret1 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime2 > getLastPollCret2) {
+            if (System.currentTimeMillis() - ItemPollTime2 > getLastPollCret2)
+            {
                 new SpawnRiftCreature2();
                 getLastPollCret2 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime3 > getLastPollCret3) {
+            if (System.currentTimeMillis() - ItemPollTime3 > getLastPollCret3)
+            {
                 new SpawnRiftCreature3();
                 getLastPollCret3 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime4 > getLastPollCret4) {
+            if (System.currentTimeMillis() - ItemPollTime4 > getLastPollCret4)
+            {
                 new SpawnRiftCreature4();
                 getLastPollCret4 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime5 > getLastPollCret5) {
+            if (System.currentTimeMillis() - ItemPollTime5 > getLastPollCret5)
+            {
                 new SpawnRiftCreature5();
                 getLastPollCret5 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime6 > getLastPollCret6) {
+            if (System.currentTimeMillis() - ItemPollTime6 > getLastPollCret6)
+            {
                 new SpawnRiftCreature6();
                 getLastPollCret6 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime7 > getLastPollCret7) {
+            if (System.currentTimeMillis() - ItemPollTime7 > getLastPollCret7)
+            {
                 new SpawnRiftCreature7();
                 getLastPollCret7 = System.currentTimeMillis();
             }
@@ -131,52 +145,65 @@ public class Initiator implements WurmServerMod, Configurable, ServerPollListene
         // End Creatures
 
         // Items
-        if (Constants.spawnRiftItems) {
-            if (System.currentTimeMillis() - ItemPollTime1 > getLastPollItem1) {
+        if (Constants.spawnRiftItems)
+        {
+            if (System.currentTimeMillis() - ItemPollTime1 > getLastPollItem1)
+            {
                 new SpawnRiftCrystal1();
                 getLastPollItem1 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime2 > getLastPollItem2) {
+            if (System.currentTimeMillis() - ItemPollTime2 > getLastPollItem2)
+            {
                 new SpawnRiftCrystal2();
                 getLastPollItem2 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime3 > getLastPollItem3) {
+            if (System.currentTimeMillis() - ItemPollTime3 > getLastPollItem3)
+            {
                 new SpawnRiftCrystal3();
                 getLastPollItem3 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime4 > getLastPollItem4) {
+            if (System.currentTimeMillis() - ItemPollTime4 > getLastPollItem4)
+            {
                 new SpawnRiftCrystal4();
                 getLastPollItem4 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime5 > getLastPollItem5) {
+            if (System.currentTimeMillis() - ItemPollTime5 > getLastPollItem5)
+            {
                 new SpawnRiftPlant1();
                 getLastPollItem5 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime6 > getLastPollItem6) {
+            if (System.currentTimeMillis() - ItemPollTime6 > getLastPollItem6)
+            {
                 new SpawnRiftPlant2();
                 getLastPollItem6 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime7 > getLastPollItem7) {
+            if (System.currentTimeMillis() - ItemPollTime7 > getLastPollItem7)
+            {
                 new SpawnRiftPlant3();
                 getLastPollItem7 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime8 > getLastPollItem8) {
+            if (System.currentTimeMillis() - ItemPollTime8 > getLastPollItem8)
+            {
                 new SpawnRiftPlant4();
                 getLastPollItem8 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime9 > getLastPollItem9) {
+            if (System.currentTimeMillis() - ItemPollTime9 > getLastPollItem9)
+            {
                 new SpawnRiftStone1();
                 getLastPollItem9 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime10 > getLastPollItem10) {
+            if (System.currentTimeMillis() - ItemPollTime10 > getLastPollItem10)
+            {
                 new SpawnRiftStone2();
                 getLastPollItem10 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime11 > getLastPollItem11) {
+            if (System.currentTimeMillis() - ItemPollTime11 > getLastPollItem11)
+            {
                 new SpawnRiftStone3();
                 getLastPollItem11 = System.currentTimeMillis();
             }
-            if (System.currentTimeMillis() - ItemPollTime12 > getLastPollItem12) {
+            if (System.currentTimeMillis() - ItemPollTime12 > getLastPollItem12)
+            {
                 new SpawnRiftStone4();
                 getLastPollItem12 = System.currentTimeMillis();
             }
@@ -185,12 +212,14 @@ public class Initiator implements WurmServerMod, Configurable, ServerPollListene
     }
 
     @Override
-    public void preInit() {
+    public void preInit()
+    {
         ModActions.init();
     }
 
     @Override
-    public void onServerStarted() {
+    public void onServerStarted()
+    {
         ModActions.registerAction(new PurgeItems());
         ModActions.registerAction(new PurgeCreatures());
     }

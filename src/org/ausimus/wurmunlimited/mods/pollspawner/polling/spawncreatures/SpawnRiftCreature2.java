@@ -33,12 +33,14 @@ import static org.ausimus.wurmunlimited.mods.pollspawner.configuration.Constants
 
 /*Super duper copyPasta*/
 @SuppressWarnings/*Who are you to tell me how to spell penus.*/("SpellCheckingInspection")
-public class SpawnRiftCreature2 {
+public class SpawnRiftCreature2
+{
     private Random random = new Random();
     private int rtx = random.nextInt(Server.surfaceMesh.getSize());
     private int rty = random.nextInt(Server.surfaceMesh.getSize());
 
-    public SpawnRiftCreature2() {
+    public SpawnRiftCreature2()
+    {
         int max = 1;
         int min = 0;
         byte rSex = (byte) (random.nextInt(max - min + 1) + min);
@@ -47,27 +49,36 @@ public class SpawnRiftCreature2 {
         byte randomType = (byte) random.nextInt(CreatureTypes.C_MOD_DISEASED);
         int tile = Server.surfaceMesh.getTile(rtx, rty);
         short height = Tiles.decodeHeight(tile);
-        if (height > 10 && preferedTypes(tile)) {
+        if (height > 10 && preferedTypes(tile))
+        {
             short[] steepness = getTileSteepness(rtx, rty);
-            if (steepness[1] >= 21) {
+            if (steepness[1] >= 21)
+            {
                 return;
             }
             VolaTile villtile = Zones.getOrCreateTile(rtx, rty, true);
             Village vill = villtile.getVillage();
-            if (vill != null) {
+            if (vill != null)
+            {
                 return;
             }
-            if (useWorldSizeMath && getNumberofCreatures() < Zones.worldTileSizeX / worldSizeMathDivider) {
+            if (useWorldSizeMath && getNumberofCreatures() < Zones.worldTileSizeX / worldSizeMathDivider)
+            {
                 SpawnCreature(CreatureTemplateIds.RIFT_JACKAL_TWO_CID, randomType, randomROT, rSex, RJ2Name);
                 AusLogger.WriteLog("Cret2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], logDir);
-                if (debugMode) {
+                if (debugMode)
+                {
                     Server.getInstance().broadCastAlert("Cret2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
                 }
-            } else {
-                if (getNumberofCreatures() < MaxCount) {
+            }
+            else
+            {
+                if (getNumberofCreatures() < MaxCount)
+                {
                     SpawnCreature(CreatureTemplateIds.RIFT_JACKAL_TWO_CID, randomType, randomROT, rSex, RJ2Name);
                     AusLogger.WriteLog("Cret2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1], logDir);
-                    if (debugMode) {
+                    if (debugMode)
+                    {
                         Server.getInstance().broadCastAlert("Cret2 Type is " + Tiles.decodeType(tile) + ", " + "Location is " + rtx + ", " + rty + ", " + "Height is " + height + ", Steepness is " + steepness[1]);
                     }
                 }
@@ -79,7 +90,8 @@ public class SpawnRiftCreature2 {
      * @param tile The tile to call.
      * @return the return statement for prefered spawn tile type.
      */
-    private boolean preferedTypes(int tile) {
+    private boolean preferedTypes(int tile)
+    {
         return !Tiles.isRoadType(Tiles.decodeType(tile)) ||
                 Tiles.decodeType(tile) != Tiles.Tile.TILE_ROCK.id ||
                 Tiles.decodeType(tile) != Tiles.Tile.TILE_HOLE.id ||
@@ -91,20 +103,26 @@ public class SpawnRiftCreature2 {
      * @param ty TileY
      * @return new short[]{(short) x, (short) (highest - lowest)};
      */
-    private static short[] getTileSteepness(int tx, int ty) {
+    private static short[] getTileSteepness(int tx, int ty)
+    {
         short highest = -100;
         short lowest = 32000;
         int x;
-        for (x = 0; x <= 1; ++x) {
-            for (int y = 0; y <= 1; ++y) {
-                if (tx + x < Zones.worldTileSizeX && ty + y < Zones.worldTileSizeY) {
+        for (x = 0; x <= 1; ++x)
+        {
+            for (int y = 0; y <= 1; ++y)
+            {
+                if (tx + x < Zones.worldTileSizeX && ty + y < Zones.worldTileSizeY)
+                {
                     short height;
                     height = Tiles.decodeHeight(Server.surfaceMesh.getTile(tx + x, ty + y));
-                    if (height > highest) {
+                    if (height > highest)
+                    {
                         highest = height;
                     }
 
-                    if (height < lowest) {
+                    if (height < lowest)
+                    {
                         lowest = height;
                     }
                 }
@@ -119,20 +137,27 @@ public class SpawnRiftCreature2 {
      *
      * @return getNumCreatures
      */
-    private int getNumberofCreatures() {
+    private int getNumberofCreatures()
+    {
         Statement stmt = null;
         ResultSet rs = null;
         int getNumCreatures = 0;
-        try {
+        try
+        {
             Connection dbcon = DbConnector.getCreatureDbCon();
             stmt = dbcon.createStatement();
             rs = stmt.executeQuery("SELECT COUNT(*) FROM CREATURES WHERE NAME = \"Rift Jackal\"");
-            if (rs.next()) {
+            if (rs.next())
+            {
                 getNumCreatures = rs.getInt(1);
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             ex.printStackTrace();
-        } finally {
+        }
+        finally
+        {
             DbUtilities.closeDatabaseObjects(stmt, rs);
         }
         return getNumCreatures;
@@ -145,10 +170,14 @@ public class SpawnRiftCreature2 {
      * @param sex  Gender.
      * @param name Name.
      */
-    private void SpawnCreature(int cret, byte type, float rot, byte sex, String name) {
-        try {
+    private void SpawnCreature(int cret, byte type, float rot, byte sex, String name)
+    {
+        try
+        {
             Creature.doNew(cret, type, (float) (rtx << 2) + 2.0F, (float) (rty << 2) + 2.0F, rot, 0, name, sex);
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             ex.printStackTrace();
         }
     }

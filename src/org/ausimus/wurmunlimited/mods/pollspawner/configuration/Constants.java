@@ -14,7 +14,8 @@
 package org.ausimus.wurmunlimited.mods.pollspawner.configuration;
 
 @SuppressWarnings/*Who are you to tell me how to spell penus.*/("SpellCheckingInspection")
-public class Constants {
+public class Constants
+{
     public static boolean debugMode;
 
     public static String logDir = "mods/PollSpawner/log.txt";
